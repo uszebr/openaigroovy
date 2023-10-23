@@ -1,6 +1,7 @@
 package openai.chat
 
 import openai.OpenAIService
+import openai.chat.response.ChatResponse
 import openai.model.AiModel
 import util.ApiClient
 import util.Json
@@ -102,6 +103,7 @@ class ChatService {
         responseCode = apiClient.responseCode
 
         if (responseCode == 200) {
+            responseData = apiClient.responseData
             new ChatResponse(Json.textToData(apiClient.responseData))
         }
         return new ChatResponse(null)
