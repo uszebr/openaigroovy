@@ -2,9 +2,11 @@ package util
 
 import org.junit.Before
 import org.junit.Test
+
+import java.time.Duration
+
 import static org.junit.Assert.assertEquals
-import static org.junit.Assert.fail
-import java.net.HttpURLConnection
+
 
 class ApiClientTest {
     private static final String BASE_URL = "https://catfact.ninja" // Replace with your base URL
@@ -12,7 +14,7 @@ class ApiClientTest {
 
     @Before
     void setUp() {
-        apiClient = new ApiClient(BASE_URL,null)
+        apiClient = new ApiClient(BASE_URL,null, Duration.ofSeconds(5),Duration.ofSeconds(5))
     }
 
     @Test

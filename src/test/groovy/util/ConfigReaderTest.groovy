@@ -30,10 +30,12 @@ class ConfigReaderTest {
     @Test
     void testFileNotFoundException() {
         // Create a ConfigReader with a non-existent resource path
+        boolean isException = false
         try {
             new ConfigReader("/nonexistent.config")
         } catch (FileNotFoundException e) {
-            assertTrue(true)
+            isException = true
         }
+        assertTrue(isException)
     }
 }
