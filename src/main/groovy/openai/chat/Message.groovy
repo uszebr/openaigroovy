@@ -21,4 +21,13 @@ class Message {
     String prepareForRequest() {
         return """{"role" : "$role.name", "content" : "$content"}"""
     }
+
+    @Override
+    String toString() {
+        return "Message{" +
+                "role=" + role +
+                ", content='" + content + '\'' +
+                ", functionCall=" + functionCall +
+                '}'
+    }
 }

@@ -1,6 +1,8 @@
 package openai.chat.response
 
 import openai.OpenAIUsage
+import openai.chat.Message
+import openai.chat.Role
 
 class ChatResponse {
     def data
@@ -13,32 +15,88 @@ class ChatResponse {
         return data != null
     }
 
-    List<Choice> getChoices(){
-        //todo
+    /**
+     * Getting all Choice instances
+     */
+    List<Choice> getChoices() {
+        if (!isResponse()) {
+            return null
+        }
+        def choicesData = data['choices']
+        def result = []
+        for (oneChoiceData in choicesData) {
+            def messageData = oneChoiceData?.getAt('message')
+            def functionData = messageData?.getAt('function_call')
+            def message
+            if (functionData) {
+                def functionCall = new FunctionCall(functionData['name'] as String, functionData['arguments'] as Map)
+                message = new Message(Role.readRoleFromName(messageData?.getAt('role') as String), messageData?.getAt('content') as String, functionCall)
+            } else {
+                message = new Message(Role.readRoleFromName(messageData?.getAt('role') as String), messageData?.getAt('content') as String)
+            }
+            Integer index = oneChoiceData?.getAt('index') as Integer
+            String finishReason = oneChoiceData?.getAt('finish_reason')
+
+            def choice = Choice.builder().withIndex(index).withFinishReason(finishReason).withMessage(message).build()
+            result.add(choice)
+        }
+        return result
     }
 
-    Choice getFirstChoice(){
-        //todo
+    /**
+     * Getting first Choice instance
+     * @return null if not found
+     */
+    Choice getFirstChoice() {
+        return getChoices()?.getAt(0)
     }
 
-    String getId(){
-        //todo
+    /**
+     * @return example: "chatcmpl-8Bn8GQVJnYK5Qxim21lX3jMhtRFqs"
+     */
+    String getId() {
+        if (!isResponse()) {
+            return null
+        }
+        return data.getAt('id')
     }
 
-    String getModelString(){
-        //todo
+    /**
+     * @return example: "model": "gpt-3.5-turbo-0613"
+     */
+    String getModelString() {
+        if (!isResponse()) {
+            return null
+        }
+        return data.getAt('model')
     }
 
-    String getObject(){
-        //todo
+    /**
+     * @return example: "chat.completion"
+     */
+    String getObject() {
+        if (!isResponse()) {
+            return null
+        }
+        return data.getAt('object')
     }
 
-    Integer getCreated(){
-        //todo
+    /**
+     * @return example: 1699039492
+     */
+    Integer getCreated() {
+        if (!isResponse()) {
+            return null
+        }
+        return data.getAt('created')
     }
 
-    OpenAIUsage getUsage(){
-        //todo
+    OpenAIUsage getUsage() {
+        if (!isResponse()) {
+            return null
+        }
+        def usageData = data.getAt('usage')
+        return new OpenAIUsage(usageData?.getAt('prompt_tokens') as Integer, usageData?.getAt('completion_tokens') as Integer, usageData?.getAt('total_tokens') as Integer)
     }
 
 

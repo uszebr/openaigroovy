@@ -7,4 +7,8 @@ class FunctionCall {
     String name
     Map<String,Object> arguments
 
+    FunctionCall(String name, Map<String, Object> arguments) {
+        this.name = name
+        this.arguments = arguments
+    }
 }
