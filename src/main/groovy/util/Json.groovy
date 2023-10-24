@@ -12,7 +12,7 @@ class Json {
         try {
             return slurper.parseText(text)
         } catch (Exception e) {
-            throw new RuntimeException("Error parsing json from text: $text")
+            throw new RuntimeException("Error parsing json from text: $text ${e.message}")
         }
 
     }
@@ -20,8 +20,8 @@ class Json {
     static String dataToText(def data) {
             try {
                 return JsonOutput.toJson(data)
-            } catch (Exception ignored) {
-                throw new RuntimeException("Error converting data to json: $data")
+            } catch (Exception e) {
+                throw new RuntimeException("Error converting data to json: $data ${e.message}")
             }
     }
 }
