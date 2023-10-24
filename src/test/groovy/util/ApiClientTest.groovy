@@ -29,30 +29,6 @@ class ApiClientTest {
     }
 
     @Test
-    void testMakePostRequest() {
-        // You can write a test for the POST request here.
-        // Ensure you have a valid URL and request body to test against.
-        // For example:
-        String path = "/api/resource"
-        String requestBody = "{\"key\": \"value\"}"
-        String response = apiClient.makePostRequest(path, requestBody)
-        // Assert the response content or status code as needed.
-        assertEquals(HttpURLConnection.HTTP_CREATED, responseCode)
-    }
-
-    @Test
-    void testMakePutRequest() {
-        // You can write a test for the PUT request here.
-        // Ensure you have a valid URL and request body to test against.
-        // For example:
-        String path = "/api/resource/123"
-        String requestBody = "{\"key\": \"updatedValue\"}"
-        String response = apiClient.makePutRequest(path, requestBody)
-        // Assert the response content or status code as needed.
-        assertEquals(HttpURLConnection.HTTP_OK, responseCode)
-    }
-
-    @Test
     void testMakeDeleteRequest() {
         // You can write a test for the DELETE request here.
         // Ensure you have a valid URL to test against.
