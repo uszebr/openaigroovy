@@ -3,6 +3,9 @@ package util
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
+/**
+ * Utility for converting Json to text and back
+ */
 class Json {
     static def textToData(String text) {
         def slurper = new JsonSlurper()
@@ -15,14 +18,10 @@ class Json {
     }
 
     static String dataToText(def data) {
-        if (data) {
             try {
                 return JsonOutput.toJson(data)
             } catch (Exception ignored) {
-                return null
+                throw new RuntimeException("Error converting data to json: $data")
             }
-        } else {
-            return null
-        }
     }
 }
