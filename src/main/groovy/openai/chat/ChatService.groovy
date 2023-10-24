@@ -42,7 +42,7 @@ class ChatService {
         responseCode = apiClient.responseCode
         if (responseCode == 200) {
             responseData = apiClient.responseData
-           return new ChatResponse(Json.textToData(apiClient.responseData))
+            return new ChatResponse(Json.textToData(apiClient.responseData))
         }
         return new ChatResponse(null)
     }
@@ -108,7 +108,7 @@ class ChatService {
             return this
         }
 
-        Builder withN(AiModel model) {
+        Builder withN(Integer n) {
             this.n = n
             return this
         }
