@@ -1,6 +1,5 @@
 package openai
 
-
 import java.time.Duration
 
 class OpenAIService {
@@ -8,6 +7,13 @@ class OpenAIService {
     final Duration CONNECT_TIMEOUT
     final Duration READ_TIMEOUT
     final String API_KEY
+
+    OpenAIService(String baseUrl, Duration connectTimeout, Duration readTimeout, String apiKey) {
+        this.BASE_URL = baseUrl
+        this.CONNECT_TIMEOUT = connectTimeout
+        this.READ_TIMEOUT = readTimeout
+        this.API_KEY = apiKey
+    }
 
     static Builder builder() {
         return new Builder()
@@ -42,13 +48,6 @@ class OpenAIService {
         OpenAIService build() {
             return new OpenAIService(baseUrl, connectTimeout, readTimeout, apiKey)
         }
-    }
-
-    OpenAIService(String baseUrl, Duration connectTimeout, Duration readTimeout, String apiKey) {
-        this.BASE_URL = baseUrl
-        this.CONNECT_TIMEOUT = connectTimeout
-        this.READ_TIMEOUT = readTimeout
-        this.API_KEY = apiKey
     }
 
 }
