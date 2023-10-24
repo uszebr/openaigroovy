@@ -51,13 +51,13 @@ class ModelApiResponse {
                 permissionsForModel.add(permission)
             }
             def modelEntity = new ModelResponse()
-                    .withId(modelData.getAt('id'))
-                    .withObject(modelData.getAt('object'))
-                    .withCreated(modelData.getAt('created'))
-                    .withOwnedBy(modelData.getAt('owned_by'))
+                    .withId(modelData['id'] as String)
+                    .withObject(modelData['object'] as String)
+                    .withCreated(modelData['created'] as Integer)
+                    .withOwnedBy(modelData['owned_by'] as String)
                     .withPermissions(permissionsForModel)
-                    .withRoot(modelData.getAt('root'))
-                    .withParent(modelData.getAt('parent'))
+                    .withRoot(modelData['root'] as String)
+                    .withParent(modelData['parent'] as String)
 
             result.add(modelEntity)
         }
