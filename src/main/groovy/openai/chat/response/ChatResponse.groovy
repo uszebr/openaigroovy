@@ -88,7 +88,7 @@ class ChatResponse {
         if (!isResponse()) {
             return null
         }
-        return data.getAt('created')
+        return data.getAt('created') as Integer
     }
 
     OpenAIUsage getUsage() {
