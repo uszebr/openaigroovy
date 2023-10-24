@@ -30,7 +30,7 @@ class ModelServiceTest {
 
     }
 
-    private checkModel(ModelResponse model) {
+    static private checkModel(ModelResponse model) {
         assert model.id.size() > 1
         assert model.object == 'model'
         assert model.created.toString().size() > 4
@@ -41,7 +41,7 @@ class ModelServiceTest {
         assert model.root.size() > 0
     }
 
-    private checkPermission(ModelPermission permission) {
+    static private checkPermission(ModelPermission permission) {
         assert permission.id.contains('modelperm-')
         assert permission.object == 'model_permission'
         assert permission.created.toString().size() > 4
