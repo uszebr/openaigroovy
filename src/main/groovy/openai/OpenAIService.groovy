@@ -2,6 +2,9 @@ package openai
 
 import java.time.Duration
 
+/**
+ * Class for storing constants needed for all OpenAI API's
+ */
 class OpenAIService {
     final String BASE_URL
     final Duration CONNECT_TIMEOUT

@@ -4,6 +4,10 @@ import openai.OpenAIService
 import util.ApiClient
 import util.Json
 
+/**
+ * Handling https://api.openai.com/v1/models endpoint
+ * no Usage in response
+ */
 class ModelService {
 
     OpenAIService service
@@ -18,7 +22,7 @@ class ModelService {
         this.service = service
     }
 
-    def call() {
+    ModelApiResponse call() {
         def apiClient = new ApiClient(service.BASE_URL, service.API_KEY, service.CONNECT_TIMEOUT, service.READ_TIMEOUT)
         apiClient.makeGetRequest(PATH)
 
@@ -27,7 +31,7 @@ class ModelService {
         if (responseCode == 200) {
             responseData = Json.textToData(apiClient.responseData)
         }
-        return apiClient.responseData
+        return new ModelApiResponse(responseData)
     }
 
 }

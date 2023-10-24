@@ -66,7 +66,7 @@ class ChatService {
         }
         String messagesBody = buildMessagesBody()
         if (messagesBody) {
-            entities.add(messagesBody)
+            entities.add("""$messagesBody""")
         }
         String body = """{
              ${entities.join(',')
