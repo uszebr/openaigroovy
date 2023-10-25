@@ -1,6 +1,6 @@
 package com.github.uszebr.openaigroovy.response
 
-
+import com.github.uszebr.openaigroovy.chat.Role
 import com.github.uszebr.openaigroovy.openai.OpenAIUsage
 import com.github.uszebr.openaigroovy.chat.Message
 
@@ -30,9 +30,9 @@ class ChatApiResponse {
             def message
             if (functionData) {
                 def functionCall = new FunctionCall(functionData['name'] as String, functionData['arguments'] as Map)
-                message = new Message(com.github.uszebr.openaigroovy.chat.Role.readRoleFromName(messageData?.getAt('role') as String), messageData?.getAt('content') as String, functionCall)
+                message = new Message(Role.readRoleFromName(messageData?.getAt('role') as String), messageData?.getAt('content') as String, functionCall)
             } else {
-                message = new Message(com.github.uszebr.openaigroovy.chat.Role.readRoleFromName(messageData?.getAt('role') as String), messageData?.getAt('content') as String)
+                message = new Message(Role.readRoleFromName(messageData?.getAt('role') as String), messageData?.getAt('content') as String)
             }
             Integer index = oneChoiceData?.getAt('index') as Integer
             String finishReason = oneChoiceData?.getAt('finish_reason')

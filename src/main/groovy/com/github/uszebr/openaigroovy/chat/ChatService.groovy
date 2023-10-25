@@ -1,15 +1,18 @@
 package com.github.uszebr.openaigroovy.chat
 
-
+import com.github.uszebr.openaigroovy.model.AiModel
+import com.github.uszebr.openaigroovy.openai.OpenAIService
+import com.github.uszebr.openaigroovy.response.ChatApiResponse
 import com.github.uszebr.openaigroovy.util.ApiClient
+import com.github.uszebr.openaigroovy.util.Json
 
 class ChatService {
-    private com.github.uszebr.openaigroovy.openai.OpenAIService service
+    private OpenAIService service
 
     Integer responseCode
     def responseData
 
-    com.github.uszebr.openaigroovy.model.AiModel model
+    AiModel model
     Double temperature
     Double topP
     Double frequencyPenalty
@@ -20,7 +23,7 @@ class ChatService {
 
     private final static PATH = "/v1/chat/completions"
 
-    ChatService(com.github.uszebr.openaigroovy.openai.OpenAIService service, com.github.uszebr.openaigroovy.model.AiModel model, Double temperature, Double topP, Double frequencyPenalty, Integer n, Integer maxTokens, List<Message> messages) {
+    ChatService(OpenAIService service, AiModel model, Double temperature, Double topP, Double frequencyPenalty, Integer n, Integer maxTokens, List<Message> messages) {
         this.service = service
         this.model = model
         this.temperature = temperature
@@ -31,16 +34,16 @@ class ChatService {
         this.n = n
     }
 
-    com.github.uszebr.openaigroovy.response.ChatApiResponse call() {
+    ChatApiResponse call() {
         def apiClient = new ApiClient(service.BASE_URL, service.API_KEY, service.CONNECT_TIMEOUT, service.READ_TIMEOUT)
         def body = buildBody()
         apiClient.makePostRequest(PATH, body)
         responseCode = apiClient.responseCode
         if (responseCode == 200) {
             responseData = apiClient.responseData
-            return new com.github.uszebr.openaigroovy.response.ChatApiResponse(com.github.uszebr.openaigroovy.util.Json.textToData(apiClient.responseData))
+            return new ChatApiResponse(Json.textToData(apiClient.responseData))
         }
-        return new com.github.uszebr.openaigroovy.response.ChatApiResponse(null)
+        return new ChatApiResponse(null)
     }
 
     private String buildBody() {
@@ -84,9 +87,9 @@ class ChatService {
     }
 
     static class Builder {
-        private com.github.uszebr.openaigroovy.openai.OpenAIService service
+        private OpenAIService service
         // default model
-        private com.github.uszebr.openaigroovy.model.AiModel model = com.github.uszebr.openaigroovy.model.AiModel.GPT_3_5_TURBO
+        private AiModel model = AiModel.GPT_3_5_TURBO
         private Double temperature
         private Double topP
         private Double frequencyPenalty
@@ -94,12 +97,12 @@ class ChatService {
         private List<Message> messages
         private Integer n
 
-        Builder withService(com.github.uszebr.openaigroovy.openai.OpenAIService service) {
+        Builder withService(OpenAIService service) {
             this.service = service
             return this
         }
 
-        Builder withModel(com.github.uszebr.openaigroovy.model.AiModel model) {
+        Builder withModel(AiModel model) {
             this.model = model
             return this
         }
