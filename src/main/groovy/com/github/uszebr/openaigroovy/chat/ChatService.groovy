@@ -1,0 +1,142 @@
+package com.github.uszebr.openaigroovy.chat
+
+
+import com.github.uszebr.openaigroovy.util.ApiClient
+
+class ChatService {
+    private com.github.uszebr.openaigroovy.openai.OpenAIService service
+
+    Integer responseCode
+    def responseData
+
+    com.github.uszebr.openaigroovy.model.AiModel model
+    Double temperature
+    Double topP
+    Double frequencyPenalty
+    Integer maxTokens
+    //quantity of choices
+    Integer n
+    List<Message> messages
+
+    private final static PATH = "/v1/chat/completions"
+
+    ChatService(com.github.uszebr.openaigroovy.openai.OpenAIService service, com.github.uszebr.openaigroovy.model.AiModel model, Double temperature, Double topP, Double frequencyPenalty, Integer n, Integer maxTokens, List<Message> messages) {
+        this.service = service
+        this.model = model
+        this.temperature = temperature
+        this.topP = topP
+        this.frequencyPenalty = frequencyPenalty
+        this.maxTokens = maxTokens
+        this.messages = messages
+        this.n = n
+    }
+
+    com.github.uszebr.openaigroovy.response.ChatApiResponse call() {
+        def apiClient = new ApiClient(service.BASE_URL, service.API_KEY, service.CONNECT_TIMEOUT, service.READ_TIMEOUT)
+        def body = buildBody()
+        apiClient.makePostRequest(PATH, body)
+        responseCode = apiClient.responseCode
+        if (responseCode == 200) {
+            responseData = apiClient.responseData
+            return new com.github.uszebr.openaigroovy.response.ChatApiResponse(com.github.uszebr.openaigroovy.util.Json.textToData(apiClient.responseData))
+        }
+        return new com.github.uszebr.openaigroovy.response.ChatApiResponse(null)
+    }
+
+    private String buildBody() {
+        List entities = [""""model": "$model.name" """]
+        if (temperature) {
+            entities.add(""" "temperature": $temperature """)
+        }
+        if (topP) {
+            entities.add(""" "top_p": $topP """)
+        }
+        if (frequencyPenalty) {
+            entities.add(""" "frequency_penalty": $frequencyPenalty """)
+        }
+        if (maxTokens) {
+            entities.add(""" "max_tokens": $maxTokens """)
+        }
+        if (n) {
+            entities.add(""" "n": $n """)
+        }
+        String messagesBody = buildMessagesBody()
+        if (messagesBody) {
+            entities.add("""$messagesBody""")
+        }
+        String body = """{
+             ${entities.join(',')
+        }
+           } """
+        return body
+    }
+
+    private String buildMessagesBody() {
+        if (!messages) {
+            return ''
+        }
+        def preparedMessages = messages.collect() { it.prepareForRequest() }
+        return """ "messages": [ ${preparedMessages.join(',')} ]"""
+    }
+
+    static Builder builder() {
+        return new Builder()
+    }
+
+    static class Builder {
+        private com.github.uszebr.openaigroovy.openai.OpenAIService service
+        // default model
+        private com.github.uszebr.openaigroovy.model.AiModel model = com.github.uszebr.openaigroovy.model.AiModel.GPT_3_5_TURBO
+        private Double temperature
+        private Double topP
+        private Double frequencyPenalty
+        private Integer maxTokens
+        private List<Message> messages
+        private Integer n
+
+        Builder withService(com.github.uszebr.openaigroovy.openai.OpenAIService service) {
+            this.service = service
+            return this
+        }
+
+        Builder withModel(com.github.uszebr.openaigroovy.model.AiModel model) {
+            this.model = model
+            return this
+        }
+
+        Builder withN(Integer n) {
+            this.n = n
+            return this
+        }
+
+        Builder withTemperature(Double temperature) {
+            this.temperature = temperature
+            return this
+        }
+
+        Builder withTopP(Double topP) {
+            this.topP = topP
+            return this
+        }
+
+        Builder withFrequencyPenalty(Double frequencyPenalty) {
+            this.frequencyPenalty = frequencyPenalty
+            return this
+        }
+
+        Builder withMaxTokens(Integer maxTokens) {
+            this.maxTokens = maxTokens
+            return this
+        }
+
+        Builder withMessages(List<Message> messages) {
+            this.messages = messages
+            return this
+        }
+
+        ChatService build() {
+            return new ChatService(service, model, temperature, topP, frequencyPenalty, n, maxTokens, messages)
+        }
+    }
+}
+
