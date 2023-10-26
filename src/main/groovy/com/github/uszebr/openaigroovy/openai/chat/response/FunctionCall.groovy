@@ -1,4 +1,4 @@
-package com.github.uszebr.openaigroovy.response
+package com.github.uszebr.openaigroovy.openai.chat.response
 
 /**
  * Handling "function_call" for chat response message

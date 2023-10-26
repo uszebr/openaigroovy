@@ -1,8 +1,8 @@
 package com.github.uszebr.openaigroovy.example
 
 import com.github.uszebr.openaigroovy.openai.OpenAIService
-import com.github.uszebr.openaigroovy.model.ModelApiResponse
-import com.github.uszebr.openaigroovy.model.ModelService
+import com.github.uszebr.openaigroovy.openai.model.ModelApiResponse
+import com.github.uszebr.openaigroovy.openai.model.ModelService
 import com.github.uszebr.openaigroovy.util.ConfigReader
 
 // getting API Key from config

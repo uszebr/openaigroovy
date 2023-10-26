@@ -1,4 +1,4 @@
-package com.github.uszebr.openaigroovy.chat
+package com.github.uszebr.openaigroovy.openai.chat
 
 enum Role {
     SYSTEM('system'),

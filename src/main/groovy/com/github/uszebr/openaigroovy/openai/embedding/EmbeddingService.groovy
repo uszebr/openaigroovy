@@ -1,7 +1,7 @@
-package com.github.uszebr.openaigroovy.embedding
+package com.github.uszebr.openaigroovy.openai.embedding
 
 
-import com.github.uszebr.openaigroovy.model.AiModel
+import com.github.uszebr.openaigroovy.openai.model.AiModel
 import com.github.uszebr.openaigroovy.openai.OpenAIService
 import com.github.uszebr.openaigroovy.util.ApiClient
 import com.github.uszebr.openaigroovy.util.Json

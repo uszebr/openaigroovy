@@ -1,4 +1,4 @@
-package com.github.uszebr.openaigroovy.embedding
+package com.github.uszebr.openaigroovy.openai.embedding
 
 import com.github.uszebr.openaigroovy.openai.OpenAIUsage
 

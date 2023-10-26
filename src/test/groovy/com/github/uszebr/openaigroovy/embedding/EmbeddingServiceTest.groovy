@@ -1,6 +1,8 @@
 package com.github.uszebr.openaigroovy.embedding
 
 import com.github.uszebr.openaigroovy.openai.OpenAIService
+import com.github.uszebr.openaigroovy.openai.embedding.EmbeddingApiResponse
+import com.github.uszebr.openaigroovy.openai.embedding.EmbeddingService
 import org.junit.Before
 import org.junit.Test
 import com.github.uszebr.openaigroovy.util.ConfigReader

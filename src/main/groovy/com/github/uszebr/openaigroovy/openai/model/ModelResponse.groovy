@@ -1,4 +1,4 @@
-package com.github.uszebr.openaigroovy.model
+package com.github.uszebr.openaigroovy.openai.model
 
 class ModelResponse {
     // ex. "text-search-babbage-doc-001"

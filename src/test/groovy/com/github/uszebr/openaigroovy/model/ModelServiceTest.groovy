@@ -1,6 +1,10 @@
 package com.github.uszebr.openaigroovy.model
 
 import com.github.uszebr.openaigroovy.openai.OpenAIService
+import com.github.uszebr.openaigroovy.openai.model.ModelApiResponse
+import com.github.uszebr.openaigroovy.openai.model.ModelPermission
+import com.github.uszebr.openaigroovy.openai.model.ModelResponse
+import com.github.uszebr.openaigroovy.openai.model.ModelService
 import com.github.uszebr.openaigroovy.util.ConfigReader
 import org.junit.Test
 

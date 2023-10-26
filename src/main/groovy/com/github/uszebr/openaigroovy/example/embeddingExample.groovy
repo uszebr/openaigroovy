@@ -1,7 +1,7 @@
 package com.github.uszebr.openaigroovy.example
 
-import com.github.uszebr.openaigroovy.embedding.EmbeddingApiResponse
-import com.github.uszebr.openaigroovy.embedding.EmbeddingService
+import com.github.uszebr.openaigroovy.openai.embedding.EmbeddingApiResponse
+import com.github.uszebr.openaigroovy.openai.embedding.EmbeddingService
 import com.github.uszebr.openaigroovy.openai.OpenAIService
 import com.github.uszebr.openaigroovy.util.ConfigReader
 
