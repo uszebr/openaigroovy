@@ -1,6 +1,6 @@
 package com.github.uszebr.openaigroovy.openai.chat
 
-
+import com.github.uszebr.openaigroovy.openai.chat.response.ChatApiResponse
 import com.github.uszebr.openaigroovy.openai.model.AiModel
 import com.github.uszebr.openaigroovy.openai.OpenAIService
 import com.github.uszebr.openaigroovy.util.ApiClient
@@ -34,16 +34,16 @@ class ChatService {
         this.n = n
     }
 
-    com.github.uszebr.openaigroovy.openai.chat.response.ChatApiResponse call() {
+    ChatApiResponse call() {
         def apiClient = new ApiClient(service.BASE_URL, service.API_KEY, service.CONNECT_TIMEOUT, service.READ_TIMEOUT)
         def body = buildBody()
         apiClient.makePostRequest(PATH, body)
         responseCode = apiClient.responseCode
         if (responseCode == 200) {
             responseData = apiClient.responseData
-            return new com.github.uszebr.openaigroovy.openai.chat.response.ChatApiResponse(Json.textToData(apiClient.responseData))
+            return new ChatApiResponse(Json.textToData(apiClient.responseData))
         }
-        return new com.github.uszebr.openaigroovy.openai.chat.response.ChatApiResponse(null)
+        return new ChatApiResponse(null)
     }
 
     private String buildBody() {
