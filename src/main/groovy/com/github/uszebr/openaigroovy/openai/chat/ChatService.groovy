@@ -1,8 +1,8 @@
-package com.github.uszebr.openaigroovy.chat
+package com.github.uszebr.openaigroovy.openai.chat
 
-import com.github.uszebr.openaigroovy.model.AiModel
+import com.github.uszebr.openaigroovy.openai.chat.response.ChatApiResponse
+import com.github.uszebr.openaigroovy.openai.model.AiModel
 import com.github.uszebr.openaigroovy.openai.OpenAIService
-import com.github.uszebr.openaigroovy.response.ChatApiResponse
 import com.github.uszebr.openaigroovy.util.ApiClient
 import com.github.uszebr.openaigroovy.util.Json
 

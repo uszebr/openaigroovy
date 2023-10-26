@@ -1,8 +1,8 @@
-package com.github.uszebr.openaigroovy.response
+package com.github.uszebr.openaigroovy.openai.chat.response
 
-import com.github.uszebr.openaigroovy.chat.Role
+import com.github.uszebr.openaigroovy.openai.chat.Role
 import com.github.uszebr.openaigroovy.openai.OpenAIUsage
-import com.github.uszebr.openaigroovy.chat.Message
+import com.github.uszebr.openaigroovy.openai.chat.Message
 
 class ChatApiResponse {
     def data

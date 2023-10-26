@@ -2,12 +2,12 @@ package com.github.uszebr.openaigroovy.example
 
 import com.github.uszebr.openaigroovy.openai.OpenAIService
 import com.github.uszebr.openaigroovy.openai.OpenAIUsage
-import com.github.uszebr.openaigroovy.chat.ChatService
-import com.github.uszebr.openaigroovy.chat.Message
-import com.github.uszebr.openaigroovy.chat.Role
-import com.github.uszebr.openaigroovy.response.ChatApiResponse
-import com.github.uszebr.openaigroovy.response.Choice
-import com.github.uszebr.openaigroovy.model.AiModel
+import com.github.uszebr.openaigroovy.openai.chat.ChatService
+import com.github.uszebr.openaigroovy.openai.chat.Message
+import com.github.uszebr.openaigroovy.openai.chat.Role
+import com.github.uszebr.openaigroovy.openai.chat.response.ChatApiResponse
+import com.github.uszebr.openaigroovy.openai.chat.response.Choice
+import com.github.uszebr.openaigroovy.openai.model.AiModel
 import com.github.uszebr.openaigroovy.util.ConfigReader
 
 //You can read API KEY from config file or set it directly to the OpenAIService

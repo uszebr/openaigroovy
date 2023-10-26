@@ -1,6 +1,7 @@
-package com.github.uszebr.openaigroovy.chat
+package com.github.uszebr.openaigroovy.openai.chat
 
-import com.github.uszebr.openaigroovy.response.FunctionCall
+
+import com.github.uszebr.openaigroovy.openai.chat.response.FunctionCall
 
 /**
  * Handling message in request and response

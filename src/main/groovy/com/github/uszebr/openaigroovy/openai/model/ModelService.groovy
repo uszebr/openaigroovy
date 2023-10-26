@@ -1,4 +1,4 @@
-package com.github.uszebr.openaigroovy.model
+package com.github.uszebr.openaigroovy.openai.model
 
 import com.github.uszebr.openaigroovy.openai.OpenAIService
 import com.github.uszebr.openaigroovy.util.ApiClient

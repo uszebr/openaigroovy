@@ -1,4 +1,4 @@
-package com.github.uszebr.openaigroovy.model
+package com.github.uszebr.openaigroovy.openai.model
 
 enum AiModel {
     GPT_3_5_TURBO_16K("gpt-3.5-turbo-16k"),

@@ -1,6 +1,7 @@
-package com.github.uszebr.openaigroovy.response
+package com.github.uszebr.openaigroovy.openai.chat.response
 
-import com.github.uszebr.openaigroovy.chat.Message
+
+import com.github.uszebr.openaigroovy.openai.chat.Message
 
 class Choice {
     Integer index
