@@ -68,7 +68,7 @@ class EmbeddingService {
         }
 
         String body = """{
-             ${entities.join(',')
+             ${entities.join(', ')
         }
            } """
         return body

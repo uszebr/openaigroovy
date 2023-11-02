@@ -21,14 +21,12 @@ class ItemsTest {
 
     @Test
     void testItemValidType0() {
-        Items items = Items.builder().type('number').build()
+        Items items = Items.builder().withType('number').build()
         assertEquals(RequestUtil.readRequest (items), ' "items": { "type": "number" }')
     }
     @Test
     void testItemValidType1() {
-        Items items = Items.builder().type('string').build()
+        Items items = Items.builder().withType('string').build()
         assertEquals(RequestUtil.readRequest (items), ' "items": { "type": "string" }')
     }
-
-
 }

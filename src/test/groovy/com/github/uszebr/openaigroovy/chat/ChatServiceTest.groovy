@@ -5,7 +5,8 @@ import com.github.uszebr.openaigroovy.openai.OpenAIUsage
 import com.github.uszebr.openaigroovy.openai.chat.ChatService
 import com.github.uszebr.openaigroovy.openai.chat.Message
 import com.github.uszebr.openaigroovy.openai.chat.Role
-import com.github.uszebr.openaigroovy.openai.chat.function.FunctionRequest
+import com.github.uszebr.openaigroovy.openai.chat.function.FunctionStep
+import com.github.uszebr.openaigroovy.openai.chat.function.FunctionRequestParameter
 import com.github.uszebr.openaigroovy.openai.chat.function.FunctionRequestProperty
 import com.github.uszebr.openaigroovy.openai.chat.response.ChatApiResponse
 import com.github.uszebr.openaigroovy.openai.chat.response.Choice
@@ -105,15 +106,19 @@ class ChatServiceTest {
                 new Message(Role.USER, "What is the weather in  Kyiv?")
         ]
         def functionProperty0 = FunctionRequestProperty.builder()
-                .name('location')
-                .type('string')
-                .description('Location Name, City, Country or Region')
+                .withName('location')
+                .withType('string')
+                .withDescription('Location Name, City, Country or Region')
                 .build()
-//todo refactoring to parameters
-        def function0 = FunctionRequest.builder()
-                .name('GetCurrentWeather')
-                .description('getting current weather on selected location')
-                .properties([functionProperty0])
+        def functionParameter = FunctionRequestParameter.builder()
+                .withType("object")
+                .withProperties([functionProperty0])
+                .withRequired(['location'])
+                .build()
+        def function0 = FunctionStep.builder()
+                .withName('GetCurrentWeather')
+                .withDescription('getting current weather on selected location')
+                .withParameter(functionParameter)
                 .build()
 
         ChatService chatService = ChatService.builder()
