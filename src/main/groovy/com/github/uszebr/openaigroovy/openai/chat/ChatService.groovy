@@ -1,7 +1,6 @@
 package com.github.uszebr.openaigroovy.openai.chat
 
 import com.github.uszebr.openaigroovy.openai.chat.function.FunctionsRequest
-import com.github.uszebr.openaigroovy.openai.chat.function.FunctionStep
 import com.github.uszebr.openaigroovy.openai.chat.response.ChatApiResponse
 import com.github.uszebr.openaigroovy.openai.model.AiModel
 import com.github.uszebr.openaigroovy.openai.OpenAIService

@@ -12,16 +12,18 @@ import static org.junit.Assert.assertNull
 class FunctionParameterTest {
     @Test
     void testFunctionParameterSimple() {
-        List<FunctionRequestProperty> properties = [FunctionRequestProperty.builder()
-                                                            .withName('Size')
-                                                            .withType('number')
-                                                            .build(),
-                                                    FunctionRequestProperty.builder()
-                                                            .withName("Locations")
-                                                            .withType('array')
-                                                            .withDescription('List of Location Names, City, Countries or Regions')
-                                                            .withItems(Items.builder().withType('string').build())
-                                                            .build()
+        def propertyOne = FunctionRequestProperty.builder()
+                .withName('Size')
+                .withType('number')
+                .build()
+        def propertyTwo = FunctionRequestProperty.builder()
+                .withName("Locations")
+                .withType('array')
+                .withDescription('List of Location Names, City, Countries or Regions')
+                .withItems(Items.builder().withType('string').build())
+                .build()
+        List<FunctionRequestProperty> properties = [propertyOne,
+                                                    propertyTwo
         ]
         FunctionRequestParameter parameter = FunctionRequestParameter.builder()
                 .withProperties(properties)

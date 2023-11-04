@@ -22,11 +22,11 @@ class FunctionStep implements FunctionReadable, RequestPart {
     @Override
     String requestPrepare() {
         def entities = []
-        entities.add(RequestUtil.createOneParamPartRequest('name',this.name))
-        entities.add(RequestUtil.createOneParamPartRequest('description',this.description))
+        entities.add(RequestUtil.createOneParamPartRequest('name', this.name))
+        entities.add(RequestUtil.createOneParamPartRequest('description', this.description))
         entities.add(RequestUtil.readRequest(parameter))
-        entities = entities.findAll(){it!=null}
-        if(entities==[]){
+        entities = entities.findAll() { it != null }
+        if (entities == []) {
             return null
         }
         return """ {${entities.join(", ")}}"""
@@ -34,8 +34,7 @@ class FunctionStep implements FunctionReadable, RequestPart {
 
     @Override
     String readFunctionForRequest() {
-        //todo
-        return null
+        return requestPrepare()
     }
 
     static Builder builder() {
@@ -51,17 +50,19 @@ class FunctionStep implements FunctionReadable, RequestPart {
             this.name = name
             return this
         }
+
         Builder withDescription(String description) {
             this.description = description
             return this
         }
+
         Builder withParameter(FunctionRequestParameter parameter) {
             this.parameter = parameter
             return this
         }
 
-        FunctionStep build(){
-            return new FunctionStep(this.name,this.description,this.parameter)
+        FunctionStep build() {
+            return new FunctionStep(this.name, this.description, this.parameter)
         }
     }
 }
