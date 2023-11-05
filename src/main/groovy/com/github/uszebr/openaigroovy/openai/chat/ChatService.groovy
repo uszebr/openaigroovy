@@ -66,9 +66,13 @@ class ChatService {
         if (n) {
             entities.add(""" "n": $n """)
         }
+
         String messagesBody = buildMessagesBody()
         if (messagesBody) {
             entities.add("""$messagesBody""")
+        }
+        if (functionsRequest) {
+            entities.add("""${functionsRequest.readAllFunctionsForRequest()}""")
         }
         String body = """{
              ${entities.grep().join(',')

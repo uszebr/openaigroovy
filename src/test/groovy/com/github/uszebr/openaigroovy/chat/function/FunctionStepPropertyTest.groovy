@@ -72,7 +72,6 @@ class FunctionStepPropertyTest {
                                                             .withItems(Items.builder().withType('string').build())
                                                             .build()
         ]
-
         String requestPartForListOfProperties = FunctionRequestProperty.requestPrepareForList(properties)
         assertEquals(requestPartForListOfProperties.toString(), ' "properties": {  "Size": { "type": "number" }, "location": { "type": "array" , "description": "List of Location Names, City, Countries or Regions" , "items": { "type": "string" }} }')
     }
@@ -98,5 +97,40 @@ class FunctionStepPropertyTest {
         assertEquals(FunctionRequestProperty.requestPrepareForList(properties), null)
     }
 
+    @Test
+    void testPropertyRequestWithEnumProp() {
+        FunctionRequestProperty functionRequestProperty = FunctionRequestProperty.builder()
+                .withName('location')
+                .withType('string')
+                .withDescription('Part of the world or continent name')
+                .withEnum(["ASIA", "AMERICA", "EUROPE", "AUSTRALIA", "OTHER"])
+                .build()
+        def expectedString = ' "properties": {  "location": { "type": "string" , "description": "Part of the world or continent name" , "enum": ["ASIA", "AMERICA", "EUROPE", "AUSTRALIA", "OTHER"]} }'
+        assertEquals( FunctionRequestProperty.requestPrepareForList([functionRequestProperty]),expectedString)
+    }
+
+    @Test
+    void testPropertyRequestWithNullEnumProp() {
+        FunctionRequestProperty functionRequestProperty = FunctionRequestProperty.builder()
+                .withName('location')
+                .withType('string')
+                .withDescription('Part of the world or continent name')
+                .withEnum(null)
+                .build()
+        def expectedString = ' "properties": {  "location": { "type": "string" , "description": "Part of the world or continent name" } }'
+        assertEquals( FunctionRequestProperty.requestPrepareForList([functionRequestProperty]),expectedString)
+    }
+
+    @Test
+    void testPropertyRequestWithEmptyEnumProp() {
+        FunctionRequestProperty functionRequestProperty = FunctionRequestProperty.builder()
+                .withName('location')
+                .withType('string')
+                .withDescription('Part of the world or continent name')
+                .withEnum([])
+                .build()
+        def expectedString = ' "properties": {  "location": { "type": "string" , "description": "Part of the world or continent name" } }'
+        assertEquals( FunctionRequestProperty.requestPrepareForList([functionRequestProperty]),expectedString)
+    }
 
 }

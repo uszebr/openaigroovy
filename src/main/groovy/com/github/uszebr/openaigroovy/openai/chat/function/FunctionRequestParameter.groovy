@@ -14,12 +14,6 @@ class FunctionRequestParameter implements RequestPart {
     // example: "required": ["locations"]
     List<String> required
 
-    FunctionRequestParameter(String type, List<FunctionRequestProperty> properties, List<String> required) {
-        this.type = type
-        this.properties = properties
-        this.required = required
-    }
-
     @Override
     String requestPrepare() {
         def entities = []
@@ -61,7 +55,11 @@ class FunctionRequestParameter implements RequestPart {
         }
 
         FunctionRequestParameter build() {
-            return new FunctionRequestParameter(this.type, this.properties, this.required)
+           def functionRequestParameter = new FunctionRequestParameter()
+            functionRequestParameter.type = this.type
+            functionRequestParameter.properties =this.properties
+            functionRequestParameter.required = this.required
+            return functionRequestParameter
         }
     }
 }

@@ -38,10 +38,8 @@ class FunctionsRequestTest {
         assert functionsRequest.readAllFunctionsForRequest() == ' "functions" : [ { "name": "GetCurrentWeather" ,  "description": "getting current weather on selected location" ,  "parameters": { "type": "object" ,  "properties": {  "Locations": { "type": "array" , "description": "List of Location Names, City, Countries or Regions" , "items": { "type": "string" }}, "language": { "type": "string" , "description": "Language question asked in" } },  "required": ["Locations"] }}]'
     }
 
-
     @Test
     void testTwoFuncRequest() {
-
         FunctionStep functionStep0 = FunctionStep.builder()
                 .withName("GetCurrentWeather")
                 .withDescription("getting current weather on selected location")
@@ -54,7 +52,6 @@ class FunctionsRequestTest {
                         .withRequired(["location"])
                         .build())
                 .build()
-
         FunctionStep functionStep1 = FunctionStep.builder()
                 .withName("GetMathOperation")
                 .withDescription("Getting math/mathematical operation")
@@ -69,7 +66,33 @@ class FunctionsRequestTest {
                 .build()
 
         FunctionsRequest functionsRequest = FunctionsRequest.builder().withFunctionReadableList([functionStep0, functionStep1]).build()
-        println functionsRequest.readAllFunctionsForRequest()
         assert functionsRequest.readAllFunctionsForRequest() == ' "functions" : [ { "name": "GetCurrentWeather" ,  "description": "getting current weather on selected location" ,  "parameters": { "type": "object" ,  "properties": {  "location": { "type": "string" , "description": "Location Name, City, Country or Region" } },  "required": ["location"] }},  { "name": "GetMathOperation" ,  "description": "Getting math/mathematical operation" ,  "parameters": { "type": "object" ,  "properties": {  "MathOperationName": { "type": "string" , "description": "Math/mathematical operation name" } }}}]'
+    }
+
+    @Test
+    void testTwoFuncRequestOneNull() {
+        FunctionStep functionStep0 = null
+        FunctionStep functionStep1 = FunctionStep.builder()
+                .withName("GetMathOperation")
+                .withDescription("Getting math/mathematical operation")
+                .withParameter(FunctionRequestParameter.builder()
+                        .withProperties([FunctionRequestProperty.builder()
+                                                 .withName("MathOperationName")
+                                                 .withDescription("Math/mathematical operation name")
+                                                 .withType("string")
+                                                 .build()])
+
+                        .build())
+                .build()
+
+        FunctionsRequest functionsRequest = FunctionsRequest.builder().withFunctionReadableList([functionStep0, functionStep1]).build()
+        assert functionsRequest.readAllFunctionsForRequest() == ' "functions" : [ { "name": "GetMathOperation" ,  "description": "Getting math/mathematical operation" ,  "parameters": { "type": "object" ,  "properties": {  "MathOperationName": { "type": "string" , "description": "Math/mathematical operation name" } }}}]'
+    }
+    @Test
+    void testFuncRequestNull() {
+        FunctionStep functionStep0 = null
+
+        FunctionsRequest functionsRequest = FunctionsRequest.builder().withFunctionReadableList([functionStep0]).build()
+        assert functionsRequest.readAllFunctionsForRequest() == null
     }
 }

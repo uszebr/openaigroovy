@@ -9,12 +9,8 @@ class FunctionRequestProperty implements RequestPart {
     String description
     Items items
 
-    FunctionRequestProperty(String name, String type, String description, Items items) {
-        this.name = name
-        this.type = type
-        this.description = description
-        this.items = items
-    }
+    //example:  "enum": ["ASIA","AMERICA","EUROPE","AUSTRALIA","OTHER"]
+    List<String> enumProp
 
     static String requestPrepareForList(List<FunctionRequestProperty> properties) {
         if (properties == null) {
@@ -39,6 +35,10 @@ class FunctionRequestProperty implements RequestPart {
         def entities = []
         entities.add(RequestUtil.createOneParamPartRequest("type", this.type))
         entities.add(RequestUtil.createOneParamPartRequest("description", this.description))
+        if(enumProp){
+            String enumEntitiesString =
+            entities.add(""" "enum": [${enumProp.collect(){"\"$it\""}.join(', ')}]""")
+        }
         entities.add(RequestUtil.readRequest(this.items))
         entities = entities.grep()
         if (entities == [])
@@ -55,6 +55,7 @@ class FunctionRequestProperty implements RequestPart {
         private String type
         private String description
         private Items items
+        private List<String> enumProp
 
         Builder withName(String name) {
             this.name = name
@@ -75,9 +76,19 @@ class FunctionRequestProperty implements RequestPart {
             this.items = items
             return this
         }
+        Builder withEnum(List<String>enumProp) {
+            this.enumProp = enumProp
+            return this
+        }
 
         FunctionRequestProperty build() {
-            return new FunctionRequestProperty(this.name, this.type, this.description, this.items)
+           def functionRequestProperty =  new FunctionRequestProperty()
+            functionRequestProperty.name = this.name
+            functionRequestProperty.type = this.type
+            functionRequestProperty.description = this.description
+            functionRequestProperty.items = this.items
+            functionRequestProperty.enumProp = this.enumProp
+            return functionRequestProperty
         }
     }
 }

@@ -13,12 +13,6 @@ class FunctionStep implements FunctionReadable, RequestPart {
     String description
     FunctionRequestParameter parameter
 
-    FunctionStep(String name, String description, FunctionRequestParameter parameter) {
-        this.name = name
-        this.description = description
-        this.parameter = parameter
-    }
-
     @Override
     String requestPrepare() {
         def entities = []
@@ -62,7 +56,11 @@ class FunctionStep implements FunctionReadable, RequestPart {
         }
 
         FunctionStep build() {
-            return new FunctionStep(this.name, this.description, this.parameter)
+            def functionStep = new FunctionStep()
+            functionStep.name = this.name
+            functionStep.description =  this.description
+            functionStep.parameter = this.parameter
+            return functionStep
         }
     }
 }

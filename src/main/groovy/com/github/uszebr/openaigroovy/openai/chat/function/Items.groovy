@@ -6,10 +6,6 @@ import com.github.uszebr.openaigroovy.util.RequestUtil
 class Items implements RequestPart {
     String type
 
-    Items(String type) {
-        this.type = type
-    }
-
     String requestPrepare() {
         def entities = [
                 RequestUtil.createOneParamPartRequest("type", this.type)
@@ -26,7 +22,7 @@ class Items implements RequestPart {
     }
 
     static class Builder {
-        private  String type
+        private String type
 
         Builder withType(String type) {
             this.type = type
@@ -34,7 +30,9 @@ class Items implements RequestPart {
         }
 
         Items build() {
-            return new Items(this.type)
+            def items = new Items()
+            items.type = this.type
+            return items
         }
     }
 }

@@ -11,9 +11,14 @@ class FunctionsRequest {
         }
         def entities = []
         for (functionReadable in functionReadableList) {
-            entities.add(functionReadable.readFunctionForRequest())
+            if (functionReadable != null) {
+                entities.add(functionReadable.readFunctionForRequest())
+            }
         }
         entities = entities.findAll() { it != null && it != '' }
+        if (entities == []) {
+            return null
+        }
         return """ "functions" : [${entities.join(', ')}]"""
     }
 

@@ -47,7 +47,6 @@ class FunctionParameterTest {
 
                 .build()
         String requestPart = parameter.requestPrepare()
-        println requestPart
         assertEquals(requestPart, """ "parameters": { "type": "object" ,  "properties": {  "Size": { "type": "number" } }}""")
     }
 
