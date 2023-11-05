@@ -102,7 +102,6 @@ class ChatServiceTest {
 
     @Test
     void testFunctionSimple() {
-        //todo fix
         def messages = [
                 new Message(Role.SYSTEM, "You are function extractor. Always call one of the provided functions. No content"),
                 new Message(Role.USER, "What is the weather in  Kyiv?")

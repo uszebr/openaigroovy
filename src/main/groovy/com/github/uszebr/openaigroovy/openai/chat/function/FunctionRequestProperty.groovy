@@ -36,7 +36,6 @@ class FunctionRequestProperty implements RequestPart {
         entities.add(RequestUtil.createOneParamPartRequest("type", this.type))
         entities.add(RequestUtil.createOneParamPartRequest("description", this.description))
         if(enumProp){
-            String enumEntitiesString =
             entities.add(""" "enum": [${enumProp.collect(){"\"$it\""}.join(', ')}]""")
         }
         entities.add(RequestUtil.readRequest(this.items))
