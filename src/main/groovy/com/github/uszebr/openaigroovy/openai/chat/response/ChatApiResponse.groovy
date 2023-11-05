@@ -29,7 +29,7 @@ class ChatApiResponse {
             def functionData = messageData?.getAt('function_call')
             def message
             if (functionData) {
-                def functionCall = new FunctionCall(functionData['name'] as String, functionData['arguments'] as Map)
+                def functionCall = new FunctionCall(functionData['name'] as String, functionData['arguments'] as String )
                 message = new Message(Role.readRoleFromName(messageData?.getAt('role') as String), messageData?.getAt('content') as String, functionCall)
             } else {
                 message = new Message(Role.readRoleFromName(messageData?.getAt('role') as String), messageData?.getAt('content') as String)

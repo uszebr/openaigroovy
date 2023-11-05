@@ -10,12 +10,6 @@ class Choice {
     // ex. values "function_call"  "stop"
     String finishReason
 
-    Choice(Integer index, Message message, String finishReason) {
-        this.index = index
-        this.message = message
-        this.finishReason = finishReason
-    }
-
     static Builder builder() {
         return new Builder()
     }
@@ -41,7 +35,11 @@ class Choice {
         }
 
         Choice build() {
-            return new Choice(index, message, finishReason)
+            def choice = new Choice()
+            choice.index = this.index
+            choice.message = this.message
+            choice.finishReason = this.finishReason
+            return choice
         }
     }
 

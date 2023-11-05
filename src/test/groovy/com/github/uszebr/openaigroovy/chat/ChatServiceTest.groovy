@@ -5,6 +5,10 @@ import com.github.uszebr.openaigroovy.openai.OpenAIUsage
 import com.github.uszebr.openaigroovy.openai.chat.ChatService
 import com.github.uszebr.openaigroovy.openai.chat.Message
 import com.github.uszebr.openaigroovy.openai.chat.Role
+import com.github.uszebr.openaigroovy.openai.chat.function.FunctionStep
+import com.github.uszebr.openaigroovy.openai.chat.function.FunctionRequestParameter
+import com.github.uszebr.openaigroovy.openai.chat.function.FunctionRequestProperty
+import com.github.uszebr.openaigroovy.openai.chat.function.FunctionsRequest
 import com.github.uszebr.openaigroovy.openai.chat.response.ChatApiResponse
 import com.github.uszebr.openaigroovy.openai.chat.response.Choice
 import com.github.uszebr.openaigroovy.openai.model.AiModel
@@ -94,5 +98,46 @@ class ChatServiceTest {
        Hey there! I'm Val! The friendly and helpful assistant in this awesome vehicle repair shop. How can I assist you today?
        Hey there! I'm Val, your trusty assistant in this awesome vehicle repair shop. I'm here to lend a hand and sprinkle a little humor into your car repair experience. So, what can I help you with today?
       */
+    }
+
+    @Test
+    void testFunctionSimple() {
+        def messages = [
+                new Message(Role.SYSTEM, "You are function extractor. Always call one of the provided functions. No content"),
+                new Message(Role.USER, "What is the weather in  Kyiv?")
+        ]
+        def functionProperty0 = FunctionRequestProperty.builder()
+                .withName('location')
+                .withType('string')
+                .withDescription('Location Name, City, Country or Region')
+                .build()
+        def functionParameter = FunctionRequestParameter.builder()
+                .withType("object")
+                .withProperties([functionProperty0])
+                .withRequired(['location'])
+                .build()
+        def function0 = FunctionStep.builder()
+                .withName('GetCurrentWeather')
+                .withDescription('getting current weather on selected location')
+                .withParameter(functionParameter)
+                .build()
+
+        FunctionsRequest functionRequest = FunctionsRequest.builder().withFunctionReadableList([function0]).build()
+
+        ChatService chatService = ChatService.builder()
+                .withService(openAIService)
+                .withModel(AiModel.GPT_3_5_TURBO)
+                .withMessages(messages)
+                .withFunctions(functionRequest)
+                .build()
+
+        ChatApiResponse response = chatService.call()
+
+        assert response.isResponse()
+
+        def arguments = response.firstChoice.message.functionCall.arguments
+        assert response.firstChoice.message.functionCall.name == 'GetCurrentWeather'
+        assert arguments.keySet().contains('location')
+        assert arguments.get('location') == 'Kyiv'
     }
 }

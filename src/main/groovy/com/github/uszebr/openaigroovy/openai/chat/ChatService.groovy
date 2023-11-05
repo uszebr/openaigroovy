@@ -1,5 +1,6 @@
 package com.github.uszebr.openaigroovy.openai.chat
 
+import com.github.uszebr.openaigroovy.openai.chat.function.FunctionsRequest
 import com.github.uszebr.openaigroovy.openai.chat.response.ChatApiResponse
 import com.github.uszebr.openaigroovy.openai.model.AiModel
 import com.github.uszebr.openaigroovy.openai.OpenAIService
@@ -20,10 +21,11 @@ class ChatService {
     //quantity of choices
     Integer n
     List<Message> messages
+    FunctionsRequest functionsRequest
 
     private final static PATH = "/v1/chat/completions"
 
-    ChatService(OpenAIService service, AiModel model, Double temperature, Double topP, Double frequencyPenalty, Integer n, Integer maxTokens, List<Message> messages) {
+    ChatService(OpenAIService service, AiModel model, Double temperature, Double topP, Double frequencyPenalty, Integer n, Integer maxTokens, List<Message> messages, FunctionsRequest functionsRequest) {
         this.service = service
         this.model = model
         this.temperature = temperature
@@ -32,6 +34,7 @@ class ChatService {
         this.maxTokens = maxTokens
         this.messages = messages
         this.n = n
+        this.functionsRequest = functionsRequest
     }
 
     ChatApiResponse call() {
@@ -63,12 +66,16 @@ class ChatService {
         if (n) {
             entities.add(""" "n": $n """)
         }
+
         String messagesBody = buildMessagesBody()
         if (messagesBody) {
             entities.add("""$messagesBody""")
         }
+        if (functionsRequest) {
+            entities.add("""${functionsRequest.readAllFunctionsForRequest()}""")
+        }
         String body = """{
-             ${entities.join(',')
+             ${entities.grep().join(',')
         }
            } """
         return body
@@ -96,6 +103,7 @@ class ChatService {
         private Integer maxTokens
         private List<Message> messages
         private Integer n
+        private FunctionsRequest functionsRequest
 
         Builder withService(OpenAIService service) {
             this.service = service
@@ -137,8 +145,13 @@ class ChatService {
             return this
         }
 
+        Builder withFunctions(FunctionsRequest functionsRequest) {
+            this.functionsRequest = functionsRequest
+            return this
+        }
+
         ChatService build() {
-            return new ChatService(service, model, temperature, topP, frequencyPenalty, n, maxTokens, messages)
+            return new ChatService(this.service, this.model, this.temperature, this.topP, this.frequencyPenalty, this.n, this.maxTokens, this.messages, this.functionsRequest)
         }
     }
 }
