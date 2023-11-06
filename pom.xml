@@ -12,16 +12,6 @@
     <description>Service classes to request OpenAI API endpoints</description>
     <url>https://github.com/uszebr/openaigroovy</url>
 
-
-    <developers>
-        <developer>
-            <name>Viktor Diachuk</name>
-            <email>openaigroovy@gmail.com</email>
-            <organization>Uszebr</organization>
-            <organizationUrl>https://github.com/uszebr/</organizationUrl>
-        </developer>
-    </developers>
-
     <scm>
         <connection>scm:git:git://github.com/uszebr/openaigroovy.git</connection>
         <developerConnection>scm:git:ssh://github.com:uszebr/openaigroovy.git</developerConnection>
