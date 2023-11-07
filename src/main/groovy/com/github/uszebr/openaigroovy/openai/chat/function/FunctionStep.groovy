@@ -6,6 +6,7 @@ import com.github.uszebr.openaigroovy.util.RequestUtil
 
 /**
  * Handling Functions in Chat Request
+ * to use function Json String use FunctionJson class
  */
 class FunctionStep implements FunctionReadable, RequestPart {
 

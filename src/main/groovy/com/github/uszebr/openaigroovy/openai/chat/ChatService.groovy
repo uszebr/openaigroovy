@@ -22,20 +22,9 @@ class ChatService {
     Integer n
     List<Message> messages
     FunctionsRequest functionsRequest
+    FunctionCall functionCall
 
     private final static PATH = "/v1/chat/completions"
-
-    ChatService(OpenAIService service, AiModel model, Double temperature, Double topP, Double frequencyPenalty, Integer n, Integer maxTokens, List<Message> messages, FunctionsRequest functionsRequest) {
-        this.service = service
-        this.model = model
-        this.temperature = temperature
-        this.topP = topP
-        this.frequencyPenalty = frequencyPenalty
-        this.maxTokens = maxTokens
-        this.messages = messages
-        this.n = n
-        this.functionsRequest = functionsRequest
-    }
 
     ChatApiResponse call() {
         def apiClient = new ApiClient(service.BASE_URL, service.API_KEY, service.CONNECT_TIMEOUT, service.READ_TIMEOUT)
@@ -104,6 +93,7 @@ class ChatService {
         private List<Message> messages
         private Integer n
         private FunctionsRequest functionsRequest
+        private FunctionCall functionCall
 
         Builder withService(OpenAIService service) {
             this.service = service
@@ -150,8 +140,24 @@ class ChatService {
             return this
         }
 
+        Builder withFunctionCall(FunctionCall functionCall) {
+            this.functionCall = functionCall
+            return this
+        }
+
         ChatService build() {
-            return new ChatService(this.service, this.model, this.temperature, this.topP, this.frequencyPenalty, this.n, this.maxTokens, this.messages, this.functionsRequest)
+            ChatService chatService = new ChatService()
+            chatService.service = this.service
+            chatService.model = this.model
+            chatService.temperature = this.temperature
+            chatService.topP = this.topP
+            chatService.frequencyPenalty = this.frequencyPenalty
+            chatService.n = this.n
+            chatService.maxTokens = this.maxTokens
+            chatService.messages = this.messages
+            chatService.functionsRequest = this.functionsRequest
+            chatService.functionCall = this.functionCall
+            return chatService
         }
     }
 }
